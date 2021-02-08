@@ -13,13 +13,6 @@ public class Main {
 
         double[] sigMinimum = new double[2];
 
-        // Образец набора данных для экстраполяции
-        double[][] d = {{1.2, 2.7}, {1.4, 3.1}};
-
-        // Пример значения x
-        double x = 2.1;
-
-
         mean = StatisticsFunction.calcSignalMean(inputSignal.InputSignal_f32_1kHz_15kHz, inputSignal.InputSignal_f32_1kHz_15kHz.length);
         variance = StatisticsFunction.calcSignalVariance(inputSignal.InputSignal_f32_1kHz_15kHz, mean, inputSignal.InputSignal_f32_1kHz_15kHz.length);
         std = StatisticsFunction.calcSignalStd(variance);
@@ -52,7 +45,6 @@ public class Main {
         System.out.println("Standard Deviation : ");
         System.out.println(std);
 
-        System.out.println("Value of y at x = 2.1 : " + Extrapolator.extrapolate(d, x));
     }
 }
 
