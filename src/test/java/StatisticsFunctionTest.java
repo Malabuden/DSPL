@@ -75,7 +75,7 @@ class StatisticsFunctionTest {
     @Test
     void calcSigMin() {
         Signal inputSignal = new Signal();
-        double[] sigMinimum = new double[2];
+        double[] sigMinimum;
         sigMinimum = StatisticsFunction.calcSigMin(inputSignal.InputSignal_f32_1kHz_15kHz, inputSignal.InputSignal_f32_1kHz_15kHz.length);
         System.out.print("Index of min value : ");
         System.out.print(sigMinimum[1]);
@@ -86,7 +86,7 @@ class StatisticsFunctionTest {
     @Test
     void calcSigMax() {
         Signal inputSignal = new Signal();
-        double[] sigMaximum = new double[2];
+        double[] sigMaximum;
         sigMaximum = StatisticsFunction.calcSigMax(inputSignal.InputSignal_f32_1kHz_15kHz, inputSignal.InputSignal_f32_1kHz_15kHz.length);
         System.out.print("Index of max value : ");
         System.out.print(sigMaximum[1]);
