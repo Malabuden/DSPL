@@ -58,7 +58,7 @@ class StatisticsFunctionTest {
     void calcSignalStdLoop() {
         Signal inputSignal = new Signal();
         double stdLoop;
-        stdLoop =  StatisticsFunction.calcSignalStdLoop(inputSignal.InputSignal_f32_1kHz_15kHz,inputSignal.InputSignal_f32_1kHz_15kHz.length);
+        stdLoop = StatisticsFunction.calcSignalStdLoop(inputSignal.InputSignal_f32_1kHz_15kHz, inputSignal.InputSignal_f32_1kHz_15kHz.length);
         System.out.println("Standard Deviation Loop : ");
         System.out.println(stdLoop);
     }
@@ -82,4 +82,16 @@ class StatisticsFunctionTest {
         System.out.print(" Min value : ");
         System.out.println(sigMinimum[0]);
     }
+
+    @Test
+    void calcSigMax() {
+        Signal inputSignal = new Signal();
+        double[] sigMaximum = new double[2];
+        sigMaximum = StatisticsFunction.calcSigMax(inputSignal.InputSignal_f32_1kHz_15kHz, inputSignal.InputSignal_f32_1kHz_15kHz.length);
+        System.out.print("Index of max value : ");
+        System.out.print(sigMaximum[1]);
+        System.out.print(" Max value : ");
+        System.out.println(sigMaximum[0]);
+    }
+
 }

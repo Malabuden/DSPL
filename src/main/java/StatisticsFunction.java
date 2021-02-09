@@ -347,4 +347,72 @@ public class StatisticsFunction {
         return resultDestArr;
     }
 
+    /**
+     * Функция расчета максимального значения сигнала.
+     * Возвращает максимальное значение сигнала и индекс дискреты.
+     *
+     * @return none.
+     * @brief Maximum value of a floating-point array.
+     * @param[in] sigSrcArr the input array
+     * @param[in] blockSize length of the input array
+     * @param[out] resultDestArr maximum value and index  returned here
+     */
+
+
+    public static double[] calcSigMax(double[] sigSrcArr, int blocksize) {
+
+        double maxValue1, maxValue2, out;
+        double blkCnt, outIndex;
+        double count = 0.0;
+        int idx = 0;
+
+        outIndex = 0;
+
+        out = sigSrcArr[idx++];
+        double[] resultDestArr = new double[2];
+
+        blkCnt = (blocksize - 1) >> 2;
+        while (blkCnt > 0) {
+            /* Initialize maxVal to the next consecutive values one by one */
+            maxValue1 = sigSrcArr[idx++];
+            maxValue2 = sigSrcArr[idx++];
+
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = count + 1;
+            }
+            if (out < maxValue2) {
+                out = maxValue2;
+                outIndex = count + 2;
+            }
+
+            maxValue1 = sigSrcArr[idx++];
+            maxValue2 = sigSrcArr[idx++];
+
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = count + 3;
+            }
+
+            if (out < maxValue2) {
+                out = maxValue2;
+                outIndex = count + 4;
+            }
+
+            count += 4;
+            blkCnt--;
+        }
+        blkCnt = (blocksize - 1) % 0x4;
+        while (blkCnt > 0) {
+            maxValue1 = sigSrcArr[idx++];
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = blocksize - blkCnt;
+            }
+            blkCnt--;
+        }
+        resultDestArr[0] = out;
+        resultDestArr[1] = outIndex;
+        return resultDestArr;
+    }
 }
