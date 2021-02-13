@@ -181,7 +181,89 @@ public class Extrapolator {
 
     }
 
+    /**
+     * Вычисляет два коээфициента модели нелинейной регресии
+     *
+     * @param x массив входных значений по оси Х
+     * @param y массив входных значений по оси У
+     * @return возвращает два коээфициента функции нелинейной регрессии
+     */
+    public static double[] regressionsCoefficientsGiperbolikFunction(double[] x, double[] y) {
+        double[] regressionCoefficients = new double[2];
+        double a;
+        double b;
+        double[] Y = new double[x.length];
+        double[] Z = new double[x.length];
+        double[] Z2 = new double[x.length];
+        double[] ZY = new double[x.length];
+        double Ys = 0;
+        double Zs = 0;
+        double Z2s = 0;
+        double ZYs = 0;
 
+        for (int i = 0; i < x.length; i++) {
+            Y[i] = y[i];
+            Z[i] = 1/(x[i]);
+            Z2[i] = Z[i] * Z[i];
+            ZY[i] = Z[i] * Y[i];
+            Ys += Y[i];
+            Zs += Z[i];
+            Z2s += Z2[i];
+            ZYs += ZY[i];
+        }
+
+        a = (Ys * Z2s - ZYs * Zs) / (x.length * Z2s - Math.pow(Zs, 2));
+        b = (x.length * ZYs - Zs * Ys) / (x.length * Z2s - Math.pow(Zs, 2));
+
+        regressionCoefficients[0] = a;
+        regressionCoefficients[1] = b;
+
+        return regressionCoefficients;
+    }
+
+    /**
+     * Вычисляет два коээфициента модели нелинейной регресии
+     *
+     * @param x массив входных значений по оси Х
+     * @param y массив входных значений по оси У
+     * @return возвращает два коээфициента функции нелинейной регрессии
+     */
+    public static double[] regressionsCoefficientsTornkwistFunction(double[] x, double[] y) {
+        double[] regressionCoefficients = new double[2];
+        double A;
+        double B;
+        double a;
+        double b;
+        double[] Z = new double[x.length];
+        double[] U = new double[x.length];
+        double[] Z2 = new double[x.length];
+        double[] ZU = new double[x.length];
+        double Zs = 0;
+        double Us = 0;
+        double Z2s = 0;
+        double ZUs = 0;
+
+        for (int i = 0; i < x.length; i++) {
+            Z[i] = 1/(x[i]);
+            U[i] = 1/(y[i]);
+            Z2[i] = Z[i] * Z[i];
+            ZU[i] = Z[i] * U[i];
+            Zs += Z[i];
+            Us += U[i];
+            Z2s += Z2[i];
+            ZUs += ZU[i];
+        }
+
+        A = (Us * Z2s - ZUs * Zs) / (x.length * Z2s - Math.pow(Zs, 2));
+        B = (x.length * ZUs - Zs * Us) / (x.length * Z2s - Math.pow(Zs, 2));
+        a = 1/A;
+        b = a*B;
+
+        regressionCoefficients[0] = a;
+        regressionCoefficients[1] = b;
+
+        return regressionCoefficients;
+    }
 
 
     /**
