@@ -140,6 +140,47 @@ public class Extrapolator {
         return regressionCoefficients;
     }
 
+    /**
+     * Вычисляет два коээфициента модели нелинейной регресии
+     *
+     * @param x массив входных значений по оси Х
+     * @param y массив входных значений по оси У
+     * @return возвращает два коээфициента функции нелинейной регрессии
+     */
+    public static double[] regressionsCoefficientsLogFunction(double[] x, double[] y) {
+        double[] regressionCoefficients = new double[2];
+        double a;
+        double b;
+        double[] Y = new double[x.length];
+        double[] Z = new double[x.length];
+        double[] Z2 = new double[x.length];
+        double[] ZY = new double[x.length];
+        double Ys = 0;
+        double Zs = 0;
+        double Z2s = 0;
+        double ZYs = 0;
+
+        for (int i = 0; i < x.length; i++) {
+            Y[i] = y[i];
+            Z[i] = Math.log10(x[i]);
+            Z2[i] = Z[i] * Z[i];
+            ZY[i] = Z[i] * Y[i];
+            Ys += Y[i];
+            Zs += Z[i];
+            Z2s += Z2[i];
+            ZYs += ZY[i];
+        }
+
+        a = (Ys * Z2s - ZYs * Zs) / (x.length * Z2s - Math.pow(Zs, 2));
+        b = (x.length * ZYs - Zs * Ys) / (x.length * Z2s - Math.pow(Zs, 2));
+
+        regressionCoefficients[0] = a;
+        regressionCoefficients[1] = b;
+
+        return regressionCoefficients;
+
+    }
+
 
 
 
