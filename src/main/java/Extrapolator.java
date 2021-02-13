@@ -98,8 +98,49 @@ public class Extrapolator {
         regressionCoefficients[1] = b;
 
         return regressionCoefficients;
-
     }
+
+    /**
+     * Вычисляет два коээфициента модели нелинейной регресии
+     *
+     * @param x массив входных значений по оси Х
+     * @param y массив входных значений по оси У
+     * @return возвращает два коээфициента функции нелинейной регрессии
+     */
+    public static double[] regressionsCoefficientsRationalFunction(double[] x, double[] y) {
+        double[] regressionCoefficients = new double[2];
+        double a;
+        double b;
+        double[] X = new double[x.length];
+        double[] U = new double[x.length];
+        double[] X2 = new double[x.length];
+        double[] UX = new double[x.length];
+        double Xs = 0;
+        double Us = 0;
+        double X2s = 0;
+        double UXs = 0;
+
+        for (int i = 0; i < x.length; i++) {
+            X[i] = x[i];
+            U[i] = 1/(y[i]);
+            X2[i] = X[i] * X[i];
+            UX[i] = X[i] * U[i];
+            Xs += X[i];
+            Us += U[i];
+            X2s += X2[i];
+            UXs += UX[i];
+        }
+
+        a = (Us * X2s - UXs * Xs) / (x.length * X2s - Math.pow(Xs, 2));
+        b = (x.length * UXs - Xs * Us) / (x.length * X2s - Math.pow(Xs, 2));
+
+        regressionCoefficients[0] = a;
+        regressionCoefficients[1] = b;
+
+        return regressionCoefficients;
+    }
+
+
 
 
     /**

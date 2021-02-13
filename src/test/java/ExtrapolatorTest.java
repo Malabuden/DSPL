@@ -48,6 +48,24 @@ class ExtrapolatorTest {
         }
     }
 
+    @org.junit.jupiter.api.Test
+    void regressionCoefficientsTest3() {
+        double[] x = {1, 2, 3, 4, 5, 6};
+        double[] y = {4, 6, 8, 9, 10, 11};
+
+        double[] yExtrapolation = new double[x.length];
+        double[] coefficients = Extrapolator.regressionsCoefficientsRationalFunction(x, y);
+        for (double coefficient : coefficients) {
+            System.out.println(coefficient);
+        }
+
+        System.out.println("Восстановленная кривая");
+        for (int i = 0; i < x.length; i++) {
+            yExtrapolation[i] = 1/(coefficients[0]+coefficients[1]*x[i]);
+            System.out.println(yExtrapolation[i]);
+        }
+    }
+
 
     @org.junit.jupiter.api.Test
     void regressionFunctionTest() {
